@@ -423,7 +423,7 @@ elif module == "GCSE Bitesize Hub 🇬🇧":
         selected_rp = st.selectbox("Select a Required Practical to Master:", rp_list)
         st.markdown("---")
         
-               if "RP 1" in selected_rp:
+        if "RP 1" in selected_rp:
             st.markdown("### 🌡️ RP 1: Investigating Specific Heat Capacity")
             power = st.slider("Heater Power Rating (Watts):", 10, 100, 50, step=10)
             time_s = st.slider("Heating Duration (seconds):", 60, 600, 300, step=60)
