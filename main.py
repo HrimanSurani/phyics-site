@@ -264,4 +264,57 @@ elif module == "GCSE Bitesize Hub 🇬🇧":
 
     with tab3:
         st.subheader("🧠 Quick Fire GCSE Quiz")
-        st.write("Test your memory below before you walk into the exam room.")
+        st.write("Test your memory below before you walk into the exam room. Answer the questions to check your knowledge!")
+
+        # --- QUESTION 1 ---
+        st.markdown("### **Question 1: Electrical Circuits**")
+        q1_choice = st.radio(
+            "When measuring the electric current flowing through a specific component in a circuit, how should the ammeter be connected?",
+            ["In parallel across the component", "Wrapped around the outside of the wire externally", "In series with the component", "Directly across the battery terminals only"],
+            index=None, # Starts with no option selected
+            key="q1"
+        )
+        
+        if q1_choice:
+            if q1_choice == "In series with the component":
+                st.success("✅ **Correct!** An ammeter must always be placed in series so that all the electric current flows directly through the meter.")
+            else:
+                st.error("❌ **Not quite!**")
+                st.info("💡 **Hint:** Think about how current is the rate of flow of charge. The charge has to physically pass *through* the meter to be counted. (Voltmeters go in parallel, ammeters go in series!)")
+
+        st.markdown("---")
+
+        # --- QUESTION 2 ---
+        st.markdown("### **Question 2: Kinetic Energy**")
+        q2_choice = st.radio(
+            "If you double the speed (velocity) of a moving bicycle, what happens to its kinetic energy?",
+            ["It doubles to twice its original value", "It stays exactly the same", "It increases by a factor of eight", "It quadruples to four times its original value"],
+            index=None,
+            key="q2"
+        )
+        
+        if q2_choice:
+            if q2_choice == "It quadruples to four times its original value":
+                st.success("✅ **Correct!** Because velocity is squared in the kinetic energy formula ($E_k = \\frac{1}{2}mv^2$), doubling the speed has a massive impact. Doubling the speed ($2^2$) makes the energy **4 times** larger!")
+            else:
+                st.error("❌ **Not quite!**")
+                st.info("💡 **Hint:** Look closely at the kinetic energy formula: $E_k = \\frac{1}{2}mv^2$. Notice that the velocity ($v$) is **squared**. What is 2 squared ($2^2$)?")
+
+        st.markdown("---")
+
+        # --- QUESTION 3 ---
+        st.markdown("### **Question 3: SI Units**")
+        q3_choice = st.radio(
+            "Which of the following is the correct SI unit for electrical resistance?",
+            ["Ampere", "Ohm", "Volt", "Watt"],
+            index=None,
+            key="q3"
+        )
+        
+        if q3_choice:
+            if q3_choice == "Ohm":
+                st.success("✅ **Correct!** The ohm ($\Omega$) is the unit of electrical resistance, named after Georg Ohm.")
+            else:
+                st.error("❌ **Not quite!**")
+                st.info("💡 **Hint:** Remember Ohm's Law ($V = IR$). Amperes measure current, Volts measure potential difference, and Watts measure power.")
+
