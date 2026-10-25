@@ -403,193 +403,224 @@ elif module == "GCSE Bitesize Hub 🇬🇧":
             g_val = st.number_input("Enter value in grams (g):", value=500.0, step=50.0)
             st.info(f"👉 **Standard Form:** {g_val} g is equal to **{g_val / 1000:.3f} kg** (Ready to use in formulas!)")
     # --- NEW ADDITION: TAB 6 (REQUIRED PRACTICALS LAB) ---
-   with tab6:
-st.subheader("🥽 Complete GCSE Physics Required Practicals Guide")
-st.write("Master all 10 mandatory practicals, view active experiment variables, and study model 6-mark exam answers.")
-rp_list = [
-"RP 1: Specific Heat Capacity",
-"RP 2: Thermal Insulators",
-"RP 3: Resistance of a Wire",
-"RP 4: I-V Characteristics",
-"RP 5: Determining Density",
-"RP 6: Extension of a Spring (Hooke's Law)",
-"RP 7: Acceleration (Newton's 2nd Law)",
-"RP 8: Ripple Tank & Waves in a Solid",
-"RP 9: Light Reflection & Refraction",
-"RP 10: Radiation & Absorption (Leslie Cube)"
-]
-selected_rp = st.selectbox("Select a Required Practical to Master:", rp_list)
-st.markdown("---")
-if "RP 1" in selected_rp:
-st.markdown("### 🌡️ RP 1: Investigating Specific Heat Capacity")
-power = st.slider("Heater Power Rating (Watts):", 10, 100, 50, step=10)
-time_s = st.slider("Heating Duration (seconds):", 60, 600, 300, step=60)
-energy_j = power * time_s
-st.info(f"👉 Calculated Work Done (Energy Transferred): $E = P \times t = {power} \text{ W} \times {time_s} \text{ s} = {energy_j:,} \text{ Joules}$")
-c1, c2 = st.columns(2)
-with c1:
-st.markdown("""
-🔬 Core Variables:
-* Independent: Energy supplied / Time
-* Dependent: Temperature rise ($\Delta\theta$)
-* Control: Mass of block (1 kg), Insulation wrap
-""")
-with c2:
-st.markdown(f"""
-📊 Mock Data Output:
-* Block Mass: 1.0 kg
-* Energy Supplied: {energy_j:,} J
-* Expected Temp Rise: ~{(energy_j / 4200):.1f}°C
-""")
-with st.expander("📝 View Perfect 6-Mark Exam Answer Template"):
-st.markdown("""
-Question: Describe a method the student could use to determine the specific heat capacity of a metal block. [6 marks]
-Model Answer Checklist:
-1. Preparation: Measure and record the mass of the metal block using a top-pan balance.
-2. Setup: Wrap the block securely in an insulating layer (e.g., newspaper or foam) to reduce heat loss to the surroundings.
-3. Assembly: Place a thermometer and an immersion heater into the two holes in the block. Add a few drops of water to ensure good thermal contact.
-4. Measurements: Connect the heater to a power pack alongside a joulemeter. Record the initial temperature of the block.
-5. Execution: Turn on the power pack and heat the block for 10 minutes. Read the final temperature and the total energy input from the joulemeter.
-6. Analysis: Use the rearranged formula $c = \frac{\Delta E}{m \times \Delta\theta}$ to calculate the specific heat capacity.
-""")
-elif "RP 2" in selected_rp:
-st.markdown("### ☕ RP 2: Investigating Thermal Insulators")
-insulator = st.radio("Choose Insulation Material:", ["None (Control)", "Bubble Wrap", "Cotton Wool", "Thick Cardboard"])
-rates = {"None (Control)": 4.5, "Bubble Wrap": 1.2, "Cotton Wool": 1.8, "Thick Cardboard": 2.5}
-st.error(f"📉 Simulated Temperature Drop Rate: {rates[insulator]} °C per minute")
-with st.expander("📝 View Perfect 6-Mark Exam Answer Template"):
-st.markdown("""
-Question: Describe how a student could compare the effectiveness of different materials as thermal insulators. [6 marks]
-Model Answer Checklist:
-1. Setup: Place a small beaker inside a larger beaker and fill the gap between them with the first insulating material (e.g., card, cotton wool).
-2. Start conditions: Boil water using a kettle and pour a fixed volume (e.g., $200\text{ ml}$) into the inner beaker.
-3. Covering: Seal the beaker with a cardboard lid containing a hole for a thermometer to stop evaporation losses.
-4. Timing: Record the initial temperature of the water, start a stopwatch, and measure the temperature every 3 minutes for 15 minutes.
-5. Comparison: Repeat the exact experiment using the same volume of water and initial starting temperature, but changing the insulation material.
-6. Conclusion: Plot a cooling curve graph (Time vs Temp). The material with the lowest temperature drop (shallowest curve gradient) is the best thermal insulator.
-""")
-elif "RP 3" in selected_rp:
-st.markdown("### 📏 RP 3: Investigating the Resistance of a Wire")
-length = st.slider("Wire Length (cm):", 10, 100, 50, step=10)
-res = length * 0.12
-st.success(f"⚡ Calculated Wire Resistance: {res:.2f} Ω")
-with st.expander("📝 View Perfect 6-Mark Exam Answer Template"):
-st.markdown("""
-Question: Describe an experiment to investigate how the length of a wire affects its electrical resistance. [6 marks]
-Model Answer Checklist:
-1. Circuit build: Setup a basic series circuit containing a power pack, switch, ammeter, and a long test wire taped to a meter ruler.
-2. Voltmeter: Connect a voltmeter in parallel directly across the test wire using crocodile clips.
-3. Initial setup: Attach the first crocodile clip at the 0 cm mark and the second clip at the 10 cm mark.
-4. Data extraction: Close the switch, quickly record the readings on the ammeter and voltmeter, then immediately open the switch to stop the wire heating up.
-5. Repetition: Move the second crocodile clip out in 10 cm increments (20cm, 30cm, etc.), recording the current and voltage at each step.
-6. Analysis: Calculate resistance for each length using $R = \frac{V}{I}$. Plot a graph of Length vs Resistance. It should show a straight line through the origin, proving they are directly proportional.
-""")
-elif "RP 4" in selected_rp:
-st.markdown("### 💡 RP 4: Investigating I-V Characteristics")
-comp = st.selectbox("Select Component:", ["Ohmic Resistor", "Filament Lamp", "Diode"])
-if comp == "Ohmic Resistor": st.write("📈 Graph shape: Straight diagonal line passing through (0,0)")
-elif comp == "Filament Lamp": st.write("⏳ Graph shape: S-shaped curve due to temperature increase")
-else: st.write("📐 Graph shape: Flat zero current until 0.7V, then shoots straight up")
-with st.expander("📝 View Perfect 6-Mark Exam Answer Template"):
-st.markdown("""
-Question: Describe a method the student could use to plot the Current-Voltage (I-V) characteristic curve for a component. [6 marks]
-Model Answer Checklist:
-1. Assembly: Construct a circuit containing the test component, an ammeter in series, a voltmeter in parallel across the component, and a variable resistor.
-2. First reading: Set the variable resistor to its maximum value and record the initial voltage and current readings.
-3. Varying data: Adjust the variable resistor in small steps to change the potential difference, taking a set of 5-6 current readings.
-4. Negative bias: Disconnect the battery wires and flip them around to reverse the direction of the potential difference.
-5. Reverse tracking: Adjust the variable resistor again to take negative voltage and negative current values.
-6. Graph plot: Plot a graph with Current on the y-axis and Potential Difference on the x-axis to reveal the curve.
-""")
-elif "RP 5" in selected_rp:
-st.markdown("### 🧱 RP 5: Determining Density (Regular vs Irregular Solids)")
-obj_type = st.radio("Object Shape Category:", ["Regular Shape (Cube/Brick)", "Irregular Shape (Stone/Key)"])
-with st.expander("📝 View Perfect 6-Mark Exam Answer Template"):
-if "Regular" in obj_type:
-st.markdown("""
-Question: Describe a method to find the density of a regular plastic block. [6 marks]
-Model Answer Checklist:
-1. Mass: Measure the mass of the regular block using a digital top-pan balance.
-2. Dimensions: Use a ruler to measure the length, width, and height of the block.
-3. Volume: Multiply the three dimensions together ($\text{Volume} = l \times w \times h$) to calculate its volume.
-4. Calculation: Use the density formula: $\text{Density} = \frac{\text{Mass}}{\text{Volume}}$ ($\rho = \frac{m}{V}$).
-""")
-else:
-st.markdown("""
-Question: Describe a method to determine the density of an irregularly shaped small object. [6 marks]
-Model Answer Checklist:
-1. Mass: Measure the mass of the irregular object using a digital balance scale.
-2. Displacement Setup: Fill a displacement (Eureka) can with water until it aligns exactly level with the bottom of the spout. Place an empty measuring cylinder beneath the spout.
-3. Submersion: Lower the irregular object gently into the water using a thin piece of string so it is fully submerged.
-4. Volume collection: The object will displace its exact volume in water. Measure the volume of the collected displaced water at eye level.
-5. Calculation: Divide the initial recorded mass by this displaced volume value using $\rho = \frac{m}{V}$.
-""")
-elif "RP 6" in selected_rp:
-st.markdown("### 🪓 RP 6: Investigating Spring Extension (Hooke's Law)")
-weights = st.slider("Added Load Force (Newtons):", 0, 10, 3)
-st.write(f"📏 Simulated Spring Extension: {weights * 2.5} cm")
-with st.expander("📝 View Perfect 6-Mark Exam Answer Template"):
-st.markdown("""
-Question: Describe a laboratory method to investigate the relationship between the force applied to a spring and its extension. [6 marks]
-Model Answer Checklist:
-1. Rigging: Secure a clamp stand to the bench. Attach a spring to the top clamp, and hold a meter ruler vertically next to it.
-2. Zero alignment: Note the initial unstretched length using a pointer on the bottom loop.
-3. Loading: Add a 1 Newton weight hanger to the bottom hook of the spring.
-4. Measurement: Record the new position. Calculate extension by subtracting the unstretched length from this value.
-5. Increments: Repeat the process by adding 1N weights one at a time up to 5N or 6N.
-6. Analysis: Plot a graph of Force vs Extension. The straight line indicates they are directly proportional ($F=ke$), until it reaches the limit of proportionality.
-""")
-elif "RP 7" in selected_rp:
-st.markdown("### 🏎️ RP 7: Investigating Acceleration and Force")
-with st.expander("📝 View Perfect 6-Mark Exam Answer Template"):
-st.markdown("""
-Question: Describe a method to investigate how the force acting on a glider toy affects its acceleration rate. [6 marks]
-Model Answer Checklist:
-1. Setup: Set up an air track or low-friction ramp with a toy car connected via a string to a hanging weight stack.
-2. Sensor timing: Place two light gates along the track connected to a digital data logger.
-3. Action: Release the car and let the falling weight pull it down the track.
-4. Calculation: The data logger records initial velocity ($u$) and final velocity ($v$), dividing the change by the time taken ($a = \frac{v-u}{t}$).
-5. Changing Force: Move a weight from the car body down to the hanging hook stack to change force while keeping system mass identical.
-6. Plotting: Repeat across a range of forces and plot Force vs Acceleration.
-""")
-elif "RP 8" in selected_rp:
-st.markdown("### 🌊 RP 8: Measuring Wave Properties (Ripple Tank)")
-with st.expander("📝 View Perfect 6-Mark Exam Answer Template"):
-st.markdown("""
-Question: Describe how a ripple tank can be used to measure the frequency, wavelength, and speed of water waves. [6 marks]
-Model Answer Checklist:
-1. Setup: Fill a shallow ripple tank with water. Set a vibrating wooden bar powered by a motor to touch the water surface.
-2. Projection: Place a lamp above the tank to project wave patterns onto a white card sheet underneath.
-3. Wavelength: Place a meter ruler on the card. Take a photograph, measure the distance across 10 clear wave crests, and divide by 10 to find 1 wavelength.
-4. Frequency: Film the waves in slow motion next to a timer, count how many waves pass a point over 10 seconds, and divide by 10.
-5. Calculation: Use the wave speed equation: $\text{Wave Speed} = \text{Frequency} \times \text{Wavelength}$ ($v = f \lambda$).
-""")
-elif "RP 9" in selected_rp:
-st.markdown("### 🔦 RP 9: Investigating Light Reflection & Refraction")
-with st.expander("📝 View Perfect 6-Mark Exam Answer Template"):
-st.markdown("""
-Question: Describe an experiment using a ray box to investigate the reflection and refraction of light through a glass block. [6 marks]
-Model Answer Checklist:
-1. Trace outline: Place a rectangular glass block onto a sheet of white paper and trace around its border.
-2. Normal Line: Remove the block and draw a normal line perpendicular ($90^\circ$) to the long edge outline.
-3. Angles: Use a protractor to mark out an angle of incidence (e.g., $30^\circ$) from the normal line.
-4. Ray tracking: Shine a thin ray of light from a ray box along the incident line. Mark the exit ray path with pencil dots.
-5. Interior links: Remove the block, connect the entry point to the exit point with a straight line to track the refracted ray.
-6. Analysis: Measure the angle of reflection and the angle of refraction relative to the normal line using a protractor. Repeat for a range of angles.
-""")
-elif "RP 10" in selected_rp:
-st.markdown("### 📦 RP 10: Emission and Absorption of Infrared Heat")
-cube_side = st.selectbox("Select Surface Face of Leslie Cube:", ["Matt Black", "Shiny Black", "White", "Shiny Silver"])
-emissions = {"Matt Black": 98.0, "Shiny Black": 85.0, "White": 60.0, "Shiny Silver": 12.0}
-st.warning(f"🌡️ Infrared Thermopile Reading: {emissions[cube_side]} Internal Units")
-with st.expander("📝 View Perfect 6-Mark Exam Answer Template"):
-st.markdown("""
-Question: Describe a method using a Leslie Cube to investigate how different surfaces emit infrared radiation. [6 marks]
-Model Answer Checklist:
-1. Setup: Place a Leslie cube onto a heatproof mat on a level workbench.
-2. Filling: Fill the cube carefully with boiling water from a kettle.
-3. Stabilization: Wait a few minutes for the box surfaces to heat up to a steady temperature.
-4. Measurement tool: Hold an infrared detector at a fixed, identical distance (e.g., $10\text{ cm}$) from one of the vertical faces.
-5. Tracking: Record the value. Rotate the cube to measure emissions from all 4 remaining surfaces.
-6. Conclusion: The results will show that Matt Black is the best emitter, while Shiny Silver is the poorest emitter of infrared radiation.
-""")
+     with tab6:
+        st.subheader("🥽 Complete GCSE Physics Required Practicals Guide")
+        st.write("Master all 10 mandatory practicals, view active experiment variables, and study model 6-mark exam answers.")
+        
+        rp_list = [
+            "RP 1: Specific Heat Capacity",
+            "RP 2: Thermal Insulators",
+            "RP 3: Resistance of a Wire",
+            "RP 4: I-V Characteristics",
+            "RP 5: Determining Density",
+            "RP 6: Extension of a Spring (Hooke's Law)",
+            "RP 7: Acceleration (Newton's 2nd Law)",
+            "RP 8: Ripple Tank & Waves in a Solid",
+            "RP 9: Light Reflection & Refraction",
+            "RP 10: Radiation & Absorption (Leslie Cube)"
+        ]
+        
+        selected_rp = st.selectbox("Select a Required Practical to Master:", rp_list)
+        st.markdown("---")
+        
+        if "RP 1" in selected_rp:
+            st.markdown("### 🌡️ RP 1: Investigating Specific Heat Capacity")
+            power = st.slider("Heater Power Rating (Watts):", 10, 100, 50, step=10)
+            time_s = st.slider("Heating Duration (seconds):", 60, 600, 300, step=60)
+            energy_j = power * time_s
+            st.info(f"👉 **Calculated Work Done (Energy Transferred):** $E = P \\times t = {power} \\text{ W} \\times {time_s} \\text{ s} = {energy_j:,} \\text{ Joules}$")
+            
+            c1, c2 = st.columns(2)
+            with c1:
+                st.markdown("""
+                **🔬 Core Variables:**
+                * **Independent:** Energy supplied / Time
+                * **Dependent:** Temperature rise ($\Delta\theta$)
+                * **Control:** Mass of block (1 kg), Insulation wrap
+                """)
+            with c2:
+                st.markdown(f"""
+                **📊 Mock Data Output:**
+                * Block Mass: **1.0 kg**
+                * Energy Supplied: **{energy_j:,} J**
+                * Expected Temp Rise: **~{(energy_j / 4200):.1f}°C**
+                """)
+                
+            with st.expander("📝 View Perfect 6-Mark Exam Answer Template"):
+                st.markdown("""
+                **Question:** *Describe a method the student could use to determine the specific heat capacity of a metal block. [6 marks]*
+                
+                **Model Answer Checklist:**
+                1. **Preparation:** Measure and record the mass of the metal block using a top-pan balance.
+                2. **Setup:** Wrap the block securely in an insulating layer (e.g., newspaper or foam) to reduce heat loss to the surroundings.
+                3. **Assembly:** Place a thermometer and an immersion heater into the two holes in the block. Add a few drops of water to ensure good thermal contact.
+                4. **Measurements:** Connect the heater to a power pack alongside a joulemeter. Record the initial temperature of the block.
+                5. **Execution:** Turn on the power pack and heat the block for 10 minutes. Read the final temperature and the total energy input from the joulemeter.
+                6. **Analysis:** Use the rearranged formula $c = \\frac{\\Delta E}{m \\times \\Delta\\theta}$ to calculate the specific heat capacity.
+                """)
+
+        elif "RP 2" in selected_rp:
+            st.markdown("### ☕ RP 2: Investigating Thermal Insulators")
+            insulator = st.radio("Choose Insulation Material:", ["None (Control)", "Bubble Wrap", "Cotton Wool", "Thick Cardboard"])
+            rates = {"None (Control)": 4.5, "Bubble Wrap": 1.2, "Cotton Wool": 1.8, "Thick Cardboard": 2.5}
+            st.error(f"📉 Simulated Temperature Drop Rate: **{rates[insulator]} °C per minute**")
+            
+            with st.expander("📝 View Perfect 6-Mark Exam Answer Template"):
+                st.markdown("""
+                **Question:** *Describe how a student could compare the effectiveness of different materials as thermal insulators. [6 marks]*
+                
+                **Model Answer Checklist:**
+                1. **Setup:** Place a small beaker inside a larger beaker and fill the gap between them with the first insulating material (e.g., card, cotton wool).
+                2. **Start conditions:** Boil water using a kettle and pour a fixed volume (e.g., $200\\text{ ml}$) into the inner beaker.
+                3. **Covering:** Seal the beaker with a cardboard lid containing a hole for a thermometer to stop evaporation losses.
+                4. **Timing:** Record the initial temperature of the water, start a stopwatch, and measure the temperature every 3 minutes for 15 minutes.
+                5. **Comparison:** Repeat the exact experiment using the same volume of water and initial starting temperature, but changing the insulation material.
+                6. **Conclusion:** Plot a cooling curve graph (Time vs Temp). The material with the lowest temperature drop (shallowest curve gradient) is the best thermal insulator.
+                """)
+
+        elif "RP 3" in selected_rp:
+            st.markdown("### 📏 RP 3: Investigating the Resistance of a Wire")
+            length = st.slider("Wire Length (cm):", 10, 100, 50, step=10)
+            res = length * 0.12
+            st.success(f"⚡ Calculated Wire Resistance: **{res:.2f} Ω**")
+            
+            with st.expander("📝 View Perfect 6-Mark Exam Answer Template"):
+                st.markdown("""
+                **Question:** *Describe an experiment to investigate how the length of a wire affects its electrical resistance. [6 marks]*
+                
+                **Model Answer Checklist:**
+                1. **Circuit build:** Setup a basic series circuit containing a power pack, switch, ammeter, and a long test wire taped to a meter ruler.
+                2. **Voltmeter:** Connect a voltmeter in parallel directly across the test wire using crocodile clips.
+                3. **Initial setup:** Attach the first crocodile clip at the 0 cm mark and the second clip at the 10 cm mark.
+                4. **Data extraction:** Close the switch, quickly record the readings on the ammeter and voltmeter, then immediately open the switch to stop the wire heating up.
+                5. **Repetition:** Move the second crocodile clip out in 10 cm increments (20cm, 30cm, etc.), recording the current and voltage at each step.
+                6. **Analysis:** Calculate resistance for each length using $R = \\frac{V}{I}$. Plot a graph of Length vs Resistance. It should show a straight line through the origin, proving they are directly proportional.
+                """)
+
+        elif "RP 4" in selected_rp:
+            st.markdown("### 💡 RP 4: Investigating I-V Characteristics")
+            comp = st.selectbox("Select Component:", ["Ohmic Resistor", "Filament Lamp", "Diode"])
+            
+            if comp == "Ohmic Resistor": st.write("📈 Graph shape: **Straight diagonal line passing through (0,0)**")
+            elif comp == "Filament Lamp": st.write("⏳ Graph shape: **S-shaped curve due to temperature increase**")
+            else: st.write("📐 Graph shape: **Flat zero current until 0.7V, then shoots straight up**")
+            
+            with st.expander("📝 View Perfect 6-Mark Exam Answer Template"):
+                st.markdown("""
+                **Question:** *Describe a method the student could use to plot the Current-Voltage (I-V) characteristic curve for a component. [6 marks]*
+                
+                **Model Answer Checklist:**
+                1. **Assembly:** Construct a circuit containing the test component, an ammeter in series, a voltmeter in parallel across the component, and a variable resistor.
+                2. **First reading:** Set the variable resistor to its maximum value and record the initial voltage and current readings.
+                3. **Varying data:** Adjust the variable resistor in small steps to change the potential difference, taking a set of 5-6 current readings.
+                4. **Negative bias:** Disconnect the battery wires and flip them around to reverse the direction of the potential difference.
+                5. **Reverse tracking:** Adjust the variable resistor again to take negative voltage and negative current values.
+                6. **Graph plot:** Plot a graph with Current on the y-axis and Potential Difference on the x-axis to reveal the curve.
+                """)
+
+        elif "RP 5" in selected_rp:
+            st.markdown("### 🧱 RP 5: Determining Density (Regular vs Irregular Solids)")
+            obj_type = st.radio("Object Shape Category:", ["Regular Shape (Cube/Brick)", "Irregular Shape (Stone/Key)"])
+            with st.expander("📝 View Perfect 6-Mark Exam Answer Template"):
+                if "Regular" in obj_type:
+                    st.markdown("""
+                    **Question:** *Describe a method to find the density of a regular plastic block. [6 marks]*
+                    
+                    **Model Answer Checklist:**
+                    1. **Mass:** Measure the mass of the regular block using a digital top-pan balance.
+                    2. **Dimensions:** Use a ruler to measure the length, width, and height of the block.
+                    3. **Volume:** Multiply the three dimensions together ($\text{Volume} = l \\times w \\times h$) to calculate its volume.
+                    4. **Calculation:** Use the density formula: $\\text{Density} = \\frac{\\text{Mass}}{\\text{Volume}}$ ($\\rho = \\frac{m}{V}$).
+                    """)
+                else:
+                    st.markdown("""
+                    **Question:** *Describe a method to determine the density of an irregularly shaped small object. [6 marks]*
+                    
+                    **Model Answer Checklist:**
+                    1. **Mass:** Measure the mass of the irregular object using a digital balance scale.
+ 2. **Displacement Setup:** Fill a displacement (Eureka) can with water until it aligns exactly level with the bottom of the spout. Place an empty measuring cylinder beneath the spout.
+                    3. **Submersion:** Lower the irregular object gently into the water using a thin piece of string so it is fully submerged.
+                    4. **Volume collection:** The object will displace its exact volume in water. Measure the volume of the collected displaced water at eye level.
+                    5. **Calculation:** Divide the initial recorded mass by this displaced volume value using $\\rho = \\frac{m}{V}$.
+                    """)
+
+        elif "RP 6" in selected_rp:
+            st.markdown("### 🪓 RP 6: Investigating Spring Extension (Hooke's Law)")
+            weights = st.slider("Added Load Force (Newtons):", 0, 10, 3)
+            st.write(f"📏 Simulated Spring Extension: **{weights * 2.5} cm**")
+            
+            with st.expander("📝 View Perfect 6-Mark Exam Answer Template"):
+                st.markdown("""
+                **Question:** *Describe a laboratory method to investigate the relationship between the force applied to a spring and its extension. [6 marks]*
+                
+                **Model Answer Checklist:**
+                1. **Rigging:** Secure a clamp stand to the bench. Attach a spring to the top clamp, and hold a meter ruler vertically next to it.
+                2. **Zero alignment:** Note the initial unstretched length using a pointer on the bottom loop.
+                3. **Loading:** Add a 1 Newton weight hanger to the bottom hook of the spring.
+                4. **Measurement:** Record the new position. Calculate extension by subtracting the unstretched length from this value.
+                5. **Increments:** Repeat the process by adding 1N weights one at a time up to 5N or 6N.
+                6. **Analysis:** Plot a graph of Force vs Extension. The straight line indicates they are directly proportional ($F=ke$), until it reaches the limit of proportionality.
+                """)
+
+        elif "RP 7" in selected_rp:
+            st.markdown("### 🏎️ RP 7: Investigating Acceleration and Force")
+            with st.expander("📝 View Perfect 6-Mark Exam Answer Template"):
+                st.markdown("""
+                **Question:** *Describe a method to investigate how the force acting on a glider toy affects its acceleration rate. [6 marks]*
+                
+                **Model Answer Checklist:**
+                1. **Setup:** Set up an air track or low-friction ramp with a toy car connected via a string to a hanging weight stack.
+                2. **Sensor timing:** Place two light gates along the track connected to a digital data logger.
+                3. **Action:** Release the car and let the falling weight pull it down the track.
+                4. **Calculation:** The data logger records initial velocity ($u$) and final velocity ($v$), dividing the change by the time taken ($a = \\frac{v-u}{t}$).
+                5. **Changing Force:** Move a weight from the car body down to the hanging hook stack to change force while keeping system mass identical.
+                6. **Plotting:** Repeat across a range of forces and plot Force vs Acceleration.
+                """)
+
+        elif "RP 8" in selected_rp:
+            st.markdown("### 🌊 RP 8: Measuring Wave Properties (Ripple Tank)")
+            with st.expander("📝 View Perfect 6-Mark Exam Answer Template"):
+                st.markdown("""
+                **Question:** *Describe how a ripple tank can be used to measure the frequency, wavelength, and speed of water waves. [6 marks]*
+                
+                **Model Answer Checklist:**
+                1. **Setup:** Fill a shallow ripple tank with water. Set a vibrating wooden bar powered by a motor to touch the water surface.
+                2. **Projection:** Place a lamp above the tank to project wave patterns onto a white card sheet underneath.
+                3. **Wavelength:** Place a meter ruler on the card. Take a photograph, measure the distance across 10 clear wave crests, and divide by 10 to find 1 wavelength.
+                4. **Frequency:** Film the waves in slow motion next to a timer, count how many waves pass a point over 10 seconds, and divide by 10.
+                5. **Calculation:** Use the wave speed equation: $\\text{Wave Speed} = \\text{Frequency} \\times \\text{Wavelength}$ ($v = f \\lambda$).
+                """)
+
+        elif "RP 9" in selected_rp:
+            st.markdown("### 🔦 RP 9: Investigating Light Reflection & Refraction")
+            with st.expander("📝 View Perfect 6-Mark Exam Answer Template"):
+                st.markdown("""
+                **Question:** *Describe an experiment using a ray box to investigate the reflection and refraction of light through a glass block. [6 marks]*
+                
+                **Model Answer Checklist:**
+                1. **Trace outline:** Place a rectangular glass block onto a sheet of white paper and trace around its border.
+                2. **Normal Line:** Remove the block and draw a normal line perpendicular ($90^\\circ$) to the long edge outline.
+                3. **Angles:** Use a protractor to mark out an angle of incidence (e.g., $30^\\circ$) from the normal line.
+                4. **Ray tracking:** Shine a thin ray of light from a ray box along the incident line. Mark the exit ray path with pencil dots.
+                5. **Interior links:** Remove the block, connect the entry point to the exit point with a straight line to track the refracted ray.
+                6. **Analysis:** Measure the angle of reflection and the angle of refraction relative to the normal line using a protractor. Repeat for a range of angles.
+                """)
+
+        elif "RP 10" in selected_rp:
+            st.markdown("### 📦 RP 10: Emission and Absorption of Infrared Heat")
+            cube_side = st.selectbox("Select Surface Face of Leslie Cube:", ["Matt Black", "Shiny Black", "White", "Shiny Silver"])
+            emissions = {"Matt Black": 98.0, "Shiny Black": 85.0, "White": 60.0, "Shiny Silver": 12.0}
+            st.warning(f"🌡️ Infrared Thermopile Reading: **{emissions[cube_side]} Internal Units**")
+            
+            with st.expander("📝 View Perfect 6-Mark Exam Answer Template"):
+                st.markdown("""
+                **Question:** *Describe a method using a Leslie Cube to investigate how different surfaces emit infrared radiation. [6 marks]*
+                
+                **Model Answer Checklist:**
+                1. **Setup:** Place a Leslie cube onto a heatproof mat on a level workbench.
+                2. **Filling:** Fill the cube carefully with boiling water from a kettle.
+                3. **Stabilization:** Wait a few minutes for the box surfaces to heat up to a steady temperature.
+                4. **Measurement tool:** Hold an infrared detector at a fixed, identical distance (e.g., $10\text{ cm}$) from one of the vertical faces.
+                5. **Tracking:** Record the value. Rotate the cube to measure emissions from all 4 remaining surfaces.
+                6. **Conclusion:** The results will show that **Matt Black is the best emitter**, while **Shiny Silver is the poorest emitter** of infrared radiation.
+                """)
