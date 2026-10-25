@@ -423,20 +423,21 @@ elif module == "GCSE Bitesize Hub 🇬🇧":
         selected_rp = st.selectbox("Select a Required Practical to Master:", rp_list)
         st.markdown("---")
         
-        if "RP 1" in selected_rp:
+               if "RP 1" in selected_rp:
             st.markdown("### 🌡️ RP 1: Investigating Specific Heat Capacity")
             power = st.slider("Heater Power Rating (Watts):", 10, 100, 50, step=10)
             time_s = st.slider("Heating Duration (seconds):", 60, 600, 300, step=60)
             energy_j = power * time_s
-            st.info(r"👉 **Calculated Work Done (Energy Transferred):** $E = P \times t = " + f"{power}" + r" \text{ W} \times " + f"{time_s}" + r" \text{ s} = " + f"{energy_j:,}" + r" \text{ Joules}$")
-
+            
+            # Fixed text formatting to prevent variable interpretation errors
+            st.info(f"👉 **Calculated Work Done (Energy Transferred):** E = P × t = {power} W × {time_s} s = {energy_j:,} Joules")
             
             c1, c2 = st.columns(2)
             with c1:
                 st.markdown("""
                 **🔬 Core Variables:**
                 * **Independent:** Energy supplied / Time
-                * **Dependent:** Temperature rise ($\Delta\theta$)
+                * **Dependent:** Temperature rise (Δθ)
                 * **Control:** Mass of block (1 kg), Insulation wrap
                 """)
             with c2:
@@ -457,7 +458,7 @@ elif module == "GCSE Bitesize Hub 🇬🇧":
                 3. **Assembly:** Place a thermometer and an immersion heater into the two holes in the block. Add a few drops of water to ensure good thermal contact.
                 4. **Measurements:** Connect the heater to a power pack alongside a joulemeter. Record the initial temperature of the block.
                 5. **Execution:** Turn on the power pack and heat the block for 10 minutes. Read the final temperature and the total energy input from the joulemeter.
-                6. **Analysis:** Use the rearranged formula $c = \\frac{\\Delta E}{m \\times \\Delta\\theta}$ to calculate the specific heat capacity.
+                6. **Analysis:** Use the rearranged formula c = ΔE / (m × Δθ) to calculate the specific heat capacity.
                 """)
 
         elif "RP 2" in selected_rp:
