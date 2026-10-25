@@ -7,7 +7,8 @@ st.set_page_config(page_title="Physics Sandbox Laboratory", layout="wide")
 
 # Navigation Sidebar to pick between different modules
 st.sidebar.title("🔬 Physics Lab Menu")
-module = st.sidebar.selectbox("Choose a Physics Topic:", ["Planetary Orbit Sandbox", "Projectile Motion Simulator"])
+module = st.sidebar.selectbox("Choose a Physics Topic:", ["Planetary Orbit Sandbox", "Projectile Motion Simulator", "GCSE Bitesize Hub 🇬🇧"])
+
 
 # ==========================================
 # MODULE 1: PLANETARY ORBIT GRAVITY SANDBOX
@@ -205,3 +206,62 @@ elif module == "Projectile Motion Simulator":
 
     final_chart_data = {"Horizontal Distance (m)": all_x, "Vertical Height (m)": all_y}
     chart_placeholder.line_chart(data=final_chart_data, x="Horizontal Distance (m)", y="Vertical Height (m)")
+# ==========================================
+# MODULE 3: GCSE BITESIZE HUB
+# ==========================================
+elif module == "GCSE Bitesize Hub 🇬🇧":
+    st.title("⚡ GCSE Interactive Physics Hub")
+    st.write("Master core concepts, tricky exam formulas, and quick-fire memory tricks without the boring textbook walls.")
+
+    # Tab partitions to divide information cleanly
+    tab1, tab2, tab3 = st.tabs(["📐 Magic Formula Triangles", "🧠 Exam Memory Hacks", "🎯 Quick Knowledge Check"])
+
+    with tab1:
+        st.subheader("How to Use Formula Triangles")
+        st.write("Cover the letter you want to find with your hand! If the remaining letters are side-by-side, **multiply** them. If one is over the other, **divide**.")
+        
+        # Dropdown selection for formulas
+        formula_choice = st.selectbox("Pick a Required GCSE Equation to Test:", [
+            "Weight = Mass × Gravity (W = m g)",
+            "Speed = Distance ÷ Time (s = d/t)",
+            "Density = Mass ÷ Volume (ρ = m/V)"
+        ])
+        
+        st.markdown("---")
+        if "Weight" in formula_choice:
+            st.code("      [ W ]      \n     -------     \n    [m] * [g]    ", language="text")
+            m_input = st.number_input("Enter Mass (kg):", value=10.0)
+            g_input = st.number_input("Enter Gravity (Earth is approx 9.81 m/s²):", value=9.81)
+            st.success(f"**Calculated Weight (W):** {m_input * g_input:.2f} Newtons (N)")
+            
+        elif "Speed" in formula_choice:
+            st.code("      [ d ]      \n     -------     \n    [s] * [t]    ", language="text")
+            d_input = st.number_input("Enter Distance (meters):", value=100.0)
+            t_input = st.number_input("Enter Time (seconds):", value=12.5)
+            st.success(f"**Calculated Speed (s):** {d_input / t_input:.2f} m/s")
+            
+        elif "Density" in formula_choice:
+            st.code("      [ m ]      \n     -------     \n    [ρ] * [V]    ", language="text")
+            mass_in = st.number_input("Enter Mass (kg):", value=50.0)
+            vol_in = st.number_input("Enter Volume (m³):", value=5.0)
+            st.success(f"**Calculated Density (ρ):** {mass_in / vol_in:.2f} kg/m³")
+
+    with tab2:
+        st.subheader("💡 Simple Revision Cheat-Sheets")
+        
+        with st.expander("🌈 The Electromagnetic Spectrum (Shortest to Longest Wave)"):
+            st.markdown("""
+            **Memory Phrase:** *Roman Men Invented Very Unusual X-Ray Guns*
+            * **R**adio | **M**icrowave | **I**nfrared | **V**isible | **U**ltraviolet | **X**-ray | **G**amma
+            """)
+            
+        with st.expander("⚡ Renewable vs Non-Renewable Energy Storage"):
+            col_ren, col_non = st.columns(2)
+            with col_ren:
+                st.info("**Renewable (Won't run out)**\n* Solar\n* Wind\n* Hydroelectric\n* Tidal")
+            with col_non:
+                st.error("**Non-Renewable (Finite supply)**\n* Coal\n* Oil\n* Gas\n* Nuclear Uranium")
+
+    with tab3:
+        st.subheader("🧠 Quick Fire GCSE Quiz")
+        st.write("Test your memory below before you walk into the exam room.")
