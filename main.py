@@ -214,7 +214,7 @@ elif module == "GCSE Bitesize Hub 🇬🇧":
     st.write("Master core concepts, tricky exam formulas, and quick-fire memory tricks without the boring textbook walls.")
 
     # Tab partitions to divide information cleanly
-   tab1, tab2, tab3, tab4, tab5 = st.tabs([
+    tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "📐 Magic Formula Triangles", 
     "🧠 Exam Memory Hacks", 
     "🎯 Quick Knowledge Check",
