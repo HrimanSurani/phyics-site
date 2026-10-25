@@ -428,7 +428,8 @@ elif module == "GCSE Bitesize Hub 🇬🇧":
             power = st.slider("Heater Power Rating (Watts):", 10, 100, 50, step=10)
             time_s = st.slider("Heating Duration (seconds):", 60, 600, 300, step=60)
             energy_j = power * time_s
-            st.info(f"👉 **Calculated Work Done (Energy Transferred):** $E = P \\times t = {power} \\text{ W} \\times {time_s} \\text{ s} = {energy_j:,} \\text{ Joules}$")
+            st.info(r"👉 **Calculated Work Done (Energy Transferred):** $E = P \times t = " + f"{power}" + r" \text{ W} \times " + f"{time_s}" + r" \text{ s} = " + f"{energy_j:,}" + r" \text{ Joules}$")
+
             
             c1, c2 = st.columns(2)
             with c1:
