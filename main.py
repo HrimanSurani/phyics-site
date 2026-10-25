@@ -48,7 +48,8 @@ if module == "Planetary Orbit Sandbox":
         ay = -accel_total * (y / r)
         
         vx += ax * dt
-        vy += vy_step = ay * dt
+        vy += ay * dt
+
         x += vx * dt
         y += vy * dt
         
