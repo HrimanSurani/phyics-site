@@ -214,13 +214,15 @@ elif module == "GCSE Bitesize Hub 🇬🇧":
     st.write("Master core concepts, tricky exam formulas, and quick-fire memory tricks without the boring textbook walls.")
 
     # Tab partitions to divide information cleanly
-    tab1, tab2, tab3, tab4, tab5 = st.tabs([
-    "📐 Magic Formula Triangles", 
-    "🧠 Exam Memory Hacks", 
-    "🎯 Quick Knowledge Check",
-    "📝 Practice Your Equations", 
-    "📖 Simple Terms Glossary"
-])
+    tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
+        "📐 Magic Formula Triangles", 
+        "🧠 Exam Memory Hacks", 
+        "🎯 Quick Knowledge Check",
+        "📝 Practice Your Equations", 
+        "📖 Simple Terms Glossary",
+        "🥽 Required Practicals Lab"
+    ])
+
 
 
     with tab1:
@@ -400,3 +402,102 @@ elif module == "GCSE Bitesize Hub 🇬🇧":
         else:
             g_val = st.number_input("Enter value in grams (g):", value=500.0, step=50.0)
             st.info(f"👉 **Standard Form:** {g_val} g is equal to **{g_val / 1000:.3f} kg** (Ready to use in formulas!)")
+    # --- NEW ADDITION: TAB 6 (REQUIRED PRACTICALS LAB) ---
+    with tab6:
+        st.subheader("🥽 GCSE Physics Required Practicals Workbench")
+        st.write("Simulate mandatory lab experiments, collect mock trial data, and study exam-style trends instantly.")
+        
+        practical_choice = st.selectbox("Select a Required Practical:", [
+            "RP 3: Resistance of a Wire (Length vs Resistance)",
+            "RP 4: I–V Characteristics (Current vs Potential Difference)"
+        ])
+        
+        st.markdown("---")
+        
+        if "RP 3" in practical_choice:
+            st.markdown("### 📏 Investigating How Wire Length Changes Resistance")
+            st.write("Move the virtual crocodile clip along the meter ruler wire to change its length and record voltage ($V$) and current ($I$).")
+            
+            # Interactive Slider simulating the crocodile clip placement
+            wire_length = st.slider("Select Wire Length (cm):", min_value=10, max_value=100, value=50, step=10)
+            
+            # Underlying physics simulation values (Constant resistance per cm = 0.15 Ohms/cm)
+            sim_resistance = (wire_length * 0.15)
+            sim_voltage = 4.5 # Fixed power supply voltage
+            sim_current = sim_voltage / sim_resistance if sim_resistance > 0 else 0
+            
+            # Display current live readings as if reading lab multimeters
+            c1, c2, c3 = st.columns(3)
+            c1.metric("📏 Set Length", f"{wire_length} cm")
+            c2.metric("🔌 Voltmeter Reading", f"{sim_voltage:.2f} V")
+            c3.metric("📉 Ammeter Reading", f"{sim_current:.2f} A")
+            
+            # Generate the full exam data set table so they can see the overall trend
+            st.markdown("#### 📋 Full Results Data Table")
+            rp3_data = []
+            for length in range(10, 110, 10):
+                r_calc = length * 0.15
+                v_calc = 4.5
+                i_calc = v_calc / r_calc
+                rp3_data.append({
+                    "Wire Length (cm)": length,
+                    "Potential Difference (V)": round(v_calc, 2),
+                    "Current (A)": round(i_calc, 2),
+                    "Calculated Resistance (Ω)": round(r_calc, 2)
+                })
+            st.dataframe(rp3_data, use_container_width=True)
+            
+            # Graph Plotting the Exam Trend
+            st.markdown("#### 📈 Trajectory Trend: Length vs Resistance")
+            st.line_chart(data=rp3_data, x="Wire Length (cm)", y="Calculated Resistance (Ω)")
+            
+            st.info("💡 **Exam Takeaway:** The graph is a straight line passing through the origin $(0,0)$. This proves that **the resistance of a wire is directly proportional to its length**. Doubling the length doubles the number of metal ions electrons must collide with!")
+
+        elif "RP 4" in practical_choice:
+            st.markdown("### 💡 Investigating I–V Characteristics")
+            st.write("Vary the variable resistor to adjust the potential difference across a component. Change components to view their classic curves.")
+            
+            component = st.radio("Choose a Circuit Component to Test:", ["Fixed Resistor (Ohmic)", "Filament Lamp", "Diode"], horizontal=True)
+            
+            # Simulate generating forward and reverse potential difference points (-5V to +5V)
+            rp4_data = []
+            voltage_steps = [-5.0, -4.0, -3.0, -2.0, -1.0, 0.0, 1.0, 2.0, 3.0, 4.0, 5.0]
+            
+            for v in voltage_steps:
+                if component == "Fixed Resistor (Ohmic)":
+                    # Constant linear resistance (Ohm's Law: I = V / R)
+                    i = v / 2.0
+                elif component == "Filament Lamp":
+                    # Resistance increases with heat/voltage magnitude, curving the line
+                    if v >= 0:
+                        i = math.sqrt(v) * 0.8 if v > 0 else 0.0
+                    else:
+                        i = -math.sqrt(abs(v)) * 0.8
+                elif component == "Diode":
+                    # Conducts current in one forward direction only after ~0.7V threshold bias
+                    if v > 0.7:
+                        i = (v - 0.7) ** 2
+                    else:
+                        i = 0.0
+                        
+                rp4_data.append({
+                    "Potential Difference (V)": v,
+                    "Current (A)": round(i, 2)
+                })
+                
+            # Render Table and Chart side-by-side
+            col_left, col_right = st.columns([1, 2])
+            with col_left:
+                st.markdown("##### 📋 Telemetry Data")
+                st.dataframe(rp4_data, use_container_width=True)
+            with col_right:
+                st.markdown("##### 📈 I–V Characteristic Curve Graph")
+                st.line_chart(data=rp4_data, x="Potential Difference (V)", y="Current (A)")
+                
+            # Tailored exam explanations per selection
+            if component == "Fixed Resistor (Ohmic)":
+                st.success("📝 **Ohmic Behavior:** Current is directly proportional to potential difference. The constant gradient means resistance is completely steady.")
+            elif component == "Filament Lamp":
+                st.warning("📝 **Filament Lamp Curve:** As current increases, the metal filament heats up. The vibration of metal ions increases resistance, creating the distinct **S-shape curve**.")
+            elif component == "Diode":
+                st.error("📝 **Diode Curve:** Diodes only let current flow in **one direction** (forward bias). In reverse, resistance is infinitely high so current stays at zero.")
