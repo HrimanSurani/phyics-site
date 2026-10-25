@@ -1,12 +1,24 @@
 import math
-import streamlit as st  # <-- 1. Added Streamlit here
+import streamlit as st
 
-# --- WEBSITE INTERFACE CONFIGURATION ---
-st.title("🏹 Projectile Motion Simulator")
-st.write("This interactive application simulates a projectile's flight path using real physics equations incorporating gravity and air resistance.")
+# --- WEBSITE CONFIGURATION ---
+st.set_page_config(page_title="Projectile Simulation", layout="wide")
 
+st.title("🏹 Interactive Projectile Motion Simulator")
+st.write("Adjust the parameters in the sidebar to see how velocity, angle, mass, and gravity alter the trajectory path.")
+
+# --- SIDEBAR CONTROL PANEL ---
+st.sidebar.header("🛠️ Simulation Parameters")
+
+# Sliders that let the user control variables interactively
+velocity = st.sidebar.slider("Initial Velocity (m/s)", min_value=5.0, max_value=100.0, value=30.0, step=1.0)
+angle_degrees = st.sidebar.slider("Launch Angle (degrees)", min_value=0, max_value=90, value=45, step=1)
+mass = st.sidebar.slider("Object Mass (kg)", min_value=0.1, max_value=10.0, value=0.5, step=0.1)
+enable_drag = st.sidebar.toggle("Enable Air Resistance", value=True)
+
+# --- PHYSICS ENGINE CLASS ---
 class Projectile:
-    def __init__(self, x, y, velocity, angle_degrees, mass):
+    def __init__(self, x, y, velocity, angle_degrees, mass, enable_drag):
         self.x = x  
         self.y = y  
         self.mass = mass  
@@ -17,7 +29,7 @@ class Projectile:
         self.vy = velocity * math.sin(angle_rad)
         
         self.g = 9.81         
-        self.drag_coef = 0.47 
+        self.drag_coef = 0.47 if enable_drag else 0.0
 
     def update_physics(self, dt):
         speed = math.sqrt(self.vx**2 + self.vy**2)
@@ -39,31 +51,44 @@ class Projectile:
         self.y += self.vy * dt
 
 # --- RUNNING THE SIMULATION ---
-ball = Projectile(x=0, y=0, velocity=30, angle_degrees=45, mass=0.5)
-dt = 0.01  
+ball = Projectile(x=0, y=0, velocity=velocity, angle_degrees=angle_degrees, mass=mass, enable_drag=enable_drag)
+dt = 0.005  # Made step smaller for an ultra-smooth trajectory curve
 
-# We will collect the data into a list to display nicely on the web page
-telemetry_data = []
+# Create containers to store x and y data points for the graph
+x_coords = [0.0]
+y_coords = [0.0]
 
 time_elapsed = 0.0
-while ball.y >= 0: 
+# Guard against infinitely running loops if angle is 0 or edge cases occur
+max_steps = 10000 
+step_count = 0
+
+while ball.y >= 0 and step_count < max_steps: 
     ball.update_physics(dt)
     time_elapsed += dt
+    step_count += 1
     
-    # Save the data points to display in a chart and table
-    if round(time_elapsed, 3) % 0.2 == 0:
-        telemetry_data.append({
-            "Time (s)": round(time_elapsed, 1),
-            "X Position (m)": round(ball.x, 2),
-            "Y Position (m)": round(ball.y, 2)
-        })
+    # Save every position calculation to ensure a perfect graph path
+    x_coords.append(ball.x)
+    y_coords.append(ball.y)
 
-# --- 2. DISPLAY DATA TO THE USER ---
-st.subheader("📊 Simulation Results")
+# Format data into a dictionary structure Streamlit natively maps out
+chart_data = {
+    "Horizontal Distance (m)": x_coords,
+    "Vertical Height (m)": y_coords
+}
 
-# Show a neat visual graph of the trajectory path (X vs Y position)
-st.line_chart(data=telemetry_data, x="X Position (m)", y="Y Position (m)")
+# --- RENDER DASHBOARD LAYOUT ---
+col1, col2 = st.columns([2, 1])
 
-# Show the raw telemetry table underneath
-st.subheader("📋 Raw Telemetry Data")
-st.dataframe(telemetry_data, use_container_width=True)
+with col1:
+    st.subheader("📊 Trajectory Path")
+    # Draw a line chart plotting vertical height across horizontal distance
+    st.line_chart(data=chart_data, x="Horizontal Distance (m)", y="Vertical Height (m)")
+
+with col2:
+    st.subheader("📋 Key Metrics")
+    # Highlight final data summary milestones
+    st.metric(label="Total Distance Traveled", value=f"{x_coords[-1]:.2f} meters")
+    st.metric(label="Total Flight Time", value=f"{time_elapsed:.2f} seconds")
+    st.metric(label="Peak Height Reached", value=f"{max(y_coords):.2f} meters")
