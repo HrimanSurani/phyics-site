@@ -403,7 +403,7 @@ elif module == "GCSE Bitesize Hub 🇬🇧":
             g_val = st.number_input("Enter value in grams (g):", value=500.0, step=50.0)
             st.info(f"👉 **Standard Form:** {g_val} g is equal to **{g_val / 1000:.3f} kg** (Ready to use in formulas!)")
     # --- NEW ADDITION: TAB 6 (REQUIRED PRACTICALS LAB) ---
-     with tab6:
+    with tab6:
         st.subheader("🥽 Complete GCSE Physics Required Practicals Guide")
         st.write("Master all 10 mandatory practicals, view active experiment variables, and study model 6-mark exam answers.")
         
