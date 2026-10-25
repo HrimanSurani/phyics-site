@@ -318,3 +318,78 @@ elif module == "GCSE Bitesize Hub 🇬🇧":
                 st.error("❌ **Not quite!**")
                 st.info("💡 **Hint:** Remember Ohm's Law ($V = IR$). Amperes measure current, Volts measure potential difference, and Watts measure power.")
 
+    # --- NEW ADDITION: TAB 4 (EQUATION PRACTICE WORKBENCH) ---
+    with tab4:
+        st.subheader("📝 Physics Equation Practice Workbench")
+        st.write("Exams don't just ask you to memorize formulas—they make you rearrange them! Pick a scenario below to practice.")
+        
+        # Real-world exam style word problems
+        scenario = st.selectbox("Select a Practice Scenario:", [
+            "Scenario A: The Acceleration of a Sports Car",
+            "Scenario B: The Weight of an Astronaut on Mars"
+        ])
+        
+        st.markdown("---")
+        
+        if "Sports Car" in scenario:
+            st.markdown("💬 **The Problem:** A Tesla accelerates from rest to a final velocity of **30 m/s** over a period of **6 seconds**. Calculate the car's average acceleration.")
+            st.info("💡 **Formula Reminder:** $\\text{Acceleration} = \\frac{\\text{Change in Velocity}}{\\text{Time taken}}$ ($a = \\frac{\\Delta v}{t}$)")
+            
+            # Interactive student working inputs
+            user_calc_a = st.number_input("Type your calculated answer here (m/s²):", value=0.0, step=0.5, key="car_calc")
+            
+            if user_calc_a > 0:
+                if math.isclose(user_calc_a, 5.0):
+                    st.success("🎉 **Spot on!** 30 ÷ 6 = **5 m/s²**. Excellent working.")
+                else:
+                    st.error("❌ Not quite. Divide the total speed change (30) by the time taken (6). Try modifying your answer input above!")
+                    
+        elif "Astronaut" in scenario:
+            st.markdown("💬 **The Problem:** An astronaut has a mass of **80 kg**. On the surface of Mars, the local gravitational field strength ($g$) is only **3.7 m/s²**. What is the astronaut's total weight on Mars?")
+            st.info("💡 **Formula Reminder:** $\\text{Weight} = \\text{Mass} \\times \\text{Gravity}$ ($W = m g$)")
+            
+            user_calc_w = st.number_input("Type your calculated answer here (Newtons):", value=0.0, step=10.0, key="mars_calc")
+            
+            if user_calc_w > 0:
+                if math.isclose(user_calc_w, 296.0):
+                    st.success("🎉 **Brilliant!** 80 kg × 3.7 m/s² = **296 Newtons**. Notice how much lighter they are than on Earth!")
+                else:
+                    st.error("❌ Not quite. Multiply the mass (80) by the Mars gravity (3.7). Check your math and adjust the slider input value!")
+
+
+    # --- NEW ADDITION: TAB 5 (THE GLOSSARY & TRICKY WORDS FINDER) ---
+    with tab5:
+        st.subheader("📖 Simple Terms & Tricky Words Dictionary")
+        st.write("Physics is filled with words that sound complicated but mean simple things. Type or click a term below to decode it into plain English.")
+        
+        # Interactive searchable glossary dictionary
+        glossary = {
+            "Scalar Quantity": "A measurement that only has a size (magnitude), but NO specific direction. Examples: Speed, distance, mass, or time.",
+            "Vector Quantity": "A measurement that has BOTH a size AND a clear physical direction. Examples: Velocity (speed in a direction), weight (pulling down), or force.",
+            "Inertia": "How stubborn an object is! It is the tendency of an object to resist any change to its current movement state.",
+            "Potential Difference": "The technical name for Voltage. It is the measure of how much electrical energy push is given to electrons traveling around a circuit path.",
+            "Work Done": "Simply a fancy physics term for 'Energy Transferred'. Whenever a force moves an object across a physical distance, work is done."
+        }
+        
+        # Let users select a word instantly from a dropdown list to view definition
+        selected_word = st.selectbox("Search or Select a Tricky Word:", list(glossary.keys()))
+        
+        # Display the explanation in an easy-to-read callout box card
+        st.markdown(f"""
+        ### 🔍 Definition for **{selected_word}**
+        > {glossary[selected_word]}
+        """)
+        
+        # Fast Unit Converter widget right underneath
+        st.markdown("---")
+        st.subheader("⚖️ Quick Unit Converter")
+        st.write("Exam questions love to trick students by giving values in kilometers or grams instead of standard units. Convert them instantly here:")
+        
+        convert_type = st.radio("What unit do you want to fix?", ["Kilometers (km) ➔ Meters (m)", "Grams (g) ➔ Kilograms (kg)"], horizontal=True)
+        
+        if "Kilometers" in convert_type:
+            km_val = st.number_input("Enter value in km:", value=1.5, step=0.1)
+            st.info(f"👉 **Standard Form:** {km_val} km is equal to **{km_val * 1000:,.0f} meters** (Ready to use in formulas!)")
+        else:
+            g_val = st.number_input("Enter value in grams (g):", value=500.0, step=50.0)
+            st.info(f"👉 **Standard Form:** {g_val} g is equal to **{g_val / 1000:.3f} kg** (Ready to use in formulas!)")
